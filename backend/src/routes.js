@@ -3,6 +3,13 @@ const multer = require('multer')
 const multerConfig = require('./config/multer')
 
 const _post = require('./models/post')
+const _tweet = require('./controllers/tweetController')
+const _likes = require('./controllers/likeControllers')
+
+routes.get('/tweets', _tweet.list)
+routes.post('/tweets', _tweet.store)
+
+routes.post('/likes/:id', _likes.store)
 
 routes.get('/posts', async(req, res) => {
     const posts = await _post.find()
