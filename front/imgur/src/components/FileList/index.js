@@ -5,17 +5,19 @@ import CircularProgressbar from 'react-circular-progressbar'
 import { Container, FileInfo, Preview } from './style'
 
 
-const FileList = ({ files }) => (
+const FileList = ({ files, onDelete }) => (
     <Container>
         {files.map(uploadedFiles => (
-            <li>
+            <li key={uploadedFiles.id}>
                 <FileInfo>
                     <Preview src={uploadedFiles.preview}>
 
                     </Preview>
                     <div>
                         <strong>{uploadedFiles.name}</strong>
-                        <span>{uploadedFiles.readableSize}<button>Excluir</button></span>
+                        <span>{uploadedFiles.readableSize}
+                        {!!uploadedFiles.url && <button onClick={() => {onDelete(uploadedFiles.id)}}>Excluir</button>}
+                        </span>
                     </div>
                 </FileInfo>
                 <div>
@@ -33,7 +35,7 @@ const FileList = ({ files }) => (
                     )}
                     {uploadedFiles.url && (
 
-                        <a href="#"
+                        <a href={uploadedFiles.url}
                             target="_blank"
                             rel="noopener noreferrer">
                             <MdLink style={{ marginRight: 8 }} size={24} color="#222"></MdLink>

@@ -5,6 +5,7 @@ import Upload from './components/Upload'
 import FileList from './components/FileList'
 import { uniqueId } from 'lodash'
 import filesize from 'filesize'
+import api from './services/api'
 
 class App extends Component {
 
@@ -13,6 +14,7 @@ class App extends Component {
   }
 
   handleUpload = files => {
+  
     const _uploadedFiles = files.map(file => ({
       file,
       id: uniqueId(),
@@ -28,6 +30,47 @@ class App extends Component {
     this.setState({
       uploadedFiles: this.state.uploadedFiles.concat(_uploadedFiles)
     })
+    console.log(uploadedFiles)
+    _uploadedFiles.forEach(this.processUpload)
+  }
+
+  updateFile = (id, data) => {
+    this.setState({
+      uploadedFiles: this.state.uploadedFiles.map(file => {
+        return id == file.id ? { ...file, ...data } : file
+      })
+    })
+  }
+
+  processUpload = (file) => {
+    const data = new FormData()
+    data.append('file', file.file, file.name)
+    api.post('posts', data, {
+      onUploadProgress: e => {
+        const progress = parseInt(Math.round(e.loaded * 100 / e.total))
+        this.updateFile(file.id, {
+          progress,
+        })
+      },
+    }).then(response => {
+      console.log(response, `success`)
+      this.updateFile(file.id, {
+        uploaded: true,
+        id: response.data._id,
+        url: response.data.url
+      })
+    }).catch(() => {
+      this.updateFile(file.id, {
+        error: true
+      })
+    })
+  }
+
+  handleDelete = async id => {
+    await api.delete(`posts/${id}`)
+    this.setState({
+      uploadedFiles: this.state.uploadedFiles.filter(file => file.id != id)
+    })
   }
 
   render() {
@@ -35,15 +78,15 @@ class App extends Component {
     return (
       <Container>
         <Content>
-          <Upload>
-            { !!uploadedFiles.length && (
-              <FileList files={uploadedFiles}>
+          <Upload onUpload={this.handleUpload}>
+            {!!uploadedFiles.length && (
+              <FileList files={uploadedFiles}> onDelete={this.handleDelete}
               </FileList>
-            ) }
+            )}
           </Upload>
         </Content>
-        <GlobalStyle/>>
-        
+        <GlobalStyle />>
+
       </Container>
     );
   }
