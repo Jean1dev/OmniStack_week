@@ -1,2 +1,3 @@
 create-native-app
 create-react-app
+react-native start --reset-cache
