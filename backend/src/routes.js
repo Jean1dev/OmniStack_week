@@ -5,6 +5,13 @@ const multerConfig = require('./config/multer')
 const _post = require('./models/post')
 const _tweet = require('./controllers/tweetController')
 const _likes = require('./controllers/likeControllers')
+const _box = require('./controllers/boxController')
+const _files = require('./controllers/fileController')
+
+routes.post('/boxes', _box.store)
+routes.get('/boxes/:id', _box.show)
+
+routes.post('/boxes/:id/files', multer(multerConfig).single('file'), _files.store)
 
 routes.get('/tweets', _tweet.list)
 routes.post('/tweets', _tweet.store)
@@ -22,7 +29,7 @@ routes.delete('/posts/:id', async (req, res) => {
     return res.send("ok")
 })
 
-routes.post('/posts', multer(multerConfig).single('file'), async (req, res) => {
+routes.post('/posts', multer(multerConfig.resolver).single('file'), async (req, res) => {
     const { originalname: name, size, filename: key, location: url = ""} = req.file
 
     const post = await _post.create({
