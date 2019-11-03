@@ -11,9 +11,9 @@ class User extends Model {
             password_hash: Sequelize.STRING,
             provider: Sequelize.BOOLEAN,
         },
-        {
-            sequelize
-        })
+            {
+                sequelize
+            })
 
         this.addHook('beforeSave', async (user) => {
             if (user.password) {
@@ -26,6 +26,11 @@ class User extends Model {
 
     checkPassword(password) {
         return bcrypt.compare(password, this.password_hash)
+    }
+
+
+    static associate(models) {
+        this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar'})
     }
 }
 
