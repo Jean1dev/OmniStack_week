@@ -1,3 +1,5 @@
+MailTrap
+Sentry.io
 #Migrations 
  Sequelize CLI [Node: 10.15.0, CLI: 5.5.0, ORM: 5.11.0]
 
