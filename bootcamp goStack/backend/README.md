@@ -29,3 +29,13 @@ Commands:
 Options:
   --version  Show version number                                         [boolean]
   --help     Show help                                                   [boolean]
+
+
+Dependencias
+
+Redis
+Postgres
+Mongo
+
+docker run --name redis -p 6379:6379 -d -t redis:alpine
+
