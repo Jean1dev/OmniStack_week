@@ -12,14 +12,25 @@ export default function AvatarInput() {
 
     useEffect(() => {
         if (ref.current) {
+            console.log('foi')
             registerField({
                 name: 'avatar_id',
                 ref: ref.current,
                 path: 'dataset.file'
             })
         }
+    }, [])
 
-    }, [ref, registerField])
+    // useEffect(() => {
+    //     if (ref.current) {
+    //         console.log('foi')
+    //         registerField({
+    //             name: 'avatar_id',
+    //             ref: ref.current,
+    //             path: 'dataset.file'
+    //         })
+    //     }
+    // }, [ref, registerField])
 
     async function handleChange(e) {
         const data = new FormData()
@@ -37,12 +48,12 @@ export default function AvatarInput() {
             <label htmlFor="avatar">
                 <img src={preview || 'https://api.adorable.io/avatars/50/abott@adorable.pngCopy'} alt=""></img>
                 <input
-                    ref={ref}
+                    id="avatar"
+                    type="file"
+                    accept="image/*"
                     data-file={file}
                     onChange={handleChange}
-                    accept="image/*"
-                    id="avatar"
-                    type="file"></input>
+                    ref={ref} />
             </label>
         </Container>
     );
