@@ -12,7 +12,7 @@ export default function AvatarInput() {
 
     useEffect(() => {
         if (ref.current) {
-            console.log('foi')
+            
             registerField({
                 name: 'avatar_id',
                 ref: ref.current,
