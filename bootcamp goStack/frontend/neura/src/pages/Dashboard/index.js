@@ -1,9 +1,37 @@
 import React from 'react';
-
-// import { Container } from './styles';
+import api from '../../services/api'
+import { MdChevronLeft, MdChevronRight } from 'react-icons/md'
+import { Container, Time } from './styles';
 
 export default function Dashboard() {
   return (
-    <h1>Dashboard</h1>
-  );
+   <Container>
+     <header>
+       <button type="type">
+         <MdChevronLeft size={36} color="#FFF"/>
+       </button>
+
+        <strong> 31 de maio</strong>
+
+       <button type="type">
+         <MdChevronRight size={36} color="#FFF"/>
+       </button>
+     </header>
+
+     <ul>
+       <Time past>
+         <strong>08:00</strong>
+         <span>Claudete</span>
+       </Time>
+       <Time available>
+         <strong>09:00</strong>
+         <span>Em aberto</span>
+       </Time>
+       <Time available>
+         <strong>10:00</strong>
+         <span>Em aberto</span>
+       </Time>
+     </ul>
+   </Container>
+  )
 }
