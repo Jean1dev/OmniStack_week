@@ -4,6 +4,14 @@
     // Para obter mais informações, visite: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        {
+            "type": "chrome",
+            "request": "attach",
+            "name": "debug front-end bootcamp",
+            "port": 3000,
+            "webRoot": "${workspaceFolder}"
+        },
+    
         
         {
             "type": "node",

@@ -27,7 +27,8 @@ class Database {
             process.env.MONGO_URL,
             {
                 useNewUrlParser: true,
-                useFindAndModify: true
+                useFindAndModify: true,
+                useUnifiedTopology: true
             }
         )
     }
