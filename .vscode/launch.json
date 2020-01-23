@@ -10,15 +10,6 @@
             "name": "debug front-end bootcamp",
             "port": 3000,
             "webRoot": "${workspaceFolder}"
-        },
-    
-        
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Launch Program",
-            "program": "${workspaceFolder}/backend/src/index.js"
         }
-        
     ]
 }

@@ -79,3 +79,5 @@ typings/
 .fusebox/
 
 bootcamp\ goStack/backend/temp/uploads/*
+backend-generic/tmp/*
+bootcamp-goStack/backend/dist
