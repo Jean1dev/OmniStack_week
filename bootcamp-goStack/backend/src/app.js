@@ -4,8 +4,13 @@ import routes from './routes'
 import cors from 'cors'
 import './database'
 import * as Sentry from '@sentry/node'
+import redis from 'redis'
+import redisConfig from './config/redis'
+import rateLimit from 'express-rate-limit'
+import rateLimitRedis from 'rate-limit-redis'
 import sentryConfig from './config/sentry'
 import Youch from 'youch'
+import helmet from 'helmet'
 import 'express-async-errors'
 
 class App {
@@ -26,7 +31,22 @@ class App {
     middlewares() {
         this.server.use(cors())
         this.server.use(express.json())
+        this.server.use(helmet())
         this.server.use('/files', express.static(path.resolve(__dirname, '..', 'temp', 'uploads')))
+        this.configureRateLimit()
+    }
+
+    configureRateLimit() {
+        this.server.use(new rateLimit({
+            store: new rateLimitRedis({
+                client: redis.createClient({
+                    host: redisConfig.host,
+                    port: redisConfig.port
+                })
+            }),
+            windowMs: 1000 * 60 * 15,
+            max: 100
+        }))
     }
 
     routes() {

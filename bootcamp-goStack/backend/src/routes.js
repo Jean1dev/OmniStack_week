@@ -9,8 +9,18 @@ import multerConfig from './config/multer'
 import ScheduleController from './app/controller/ScheduleController'
 import NotificationController from './app/controller/NotificationController'
 import AvailableController from './app/controller/AvailableController'
+import Brute from 'express-brute'
+import BruteRedis from 'express-brute-redis'
+import redisConfig from './config/redis'
 
 const { Router } = require('express')
+
+const bruteStore = new BruteRedis({
+    host: redisConfig.host,
+    port: redisConfig.port
+})
+
+const bruteForce = new Brute(bruteStore)
 
 const routes = new Router()
 const upload = multer(multerConfig)
@@ -20,7 +30,7 @@ routes.get('/', (req, res) => {
 })
 
 routes.post('/users', User.store)
-routes.post('/sessions', Session.store)
+routes.post('/sessions', bruteForce.prevent, Session.store)
 
 routes.use(authMiddleware)
 
