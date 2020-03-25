@@ -2,6 +2,7 @@ const routes = require('express').Router()
 const multer = require('multer')
 const multerConfig = require('./config/multer')
 
+const _session = require('./controllers/sessionController')
 const _post = require('./models/post')
 const _tweet = require('./controllers/tweetController')
 const _likes = require('./controllers/likeControllers')
@@ -9,6 +10,20 @@ const _box = require('./controllers/boxController')
 const _files = require('./controllers/fileController')
 const _dev = require('./controllers/devController')
 const _search = require('./controllers/SearchDevController')
+const _ongs = require('./controllers/ongsController')
+const _casos = require('./controllers/casosController')
+const _ongProfile = require('./controllers/ongProfileController')
+
+routes.post('/omnistack11-login', _session.omminiStack11_ong_login)
+
+routes.post('/ongs', _ongs.create)
+routes.get('/ongs', _ongs.findAll)
+
+routes.get('/by-ongs', _ongProfile.findAll)
+
+routes.post('/casos', _casos.create)
+routes.get('/casos', _casos.findAll)
+routes.delete('/casos/:id', _casos.delete)
 
 routes.post('/dev', _dev.store)
 routes.get('/dev', _dev.findAll)
