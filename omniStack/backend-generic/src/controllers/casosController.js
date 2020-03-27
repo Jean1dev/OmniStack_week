@@ -4,7 +4,7 @@ module.exports = {
     async create(req, res) {
         const { title, description, value } = req.body
         const ong_id = req.headers.authorization
-
+        
         const [id] = await sql('casos').insert({
             title,
             description,
@@ -20,7 +20,7 @@ module.exports = {
 
         const [count] = await sql('casos').count()
         const casos = await sql('casos')
-            .join('ongs', 'ongs_id', '=', 'casos.ong_id')
+            .join('ongs', 'ongs.id', '=', 'casos.ong_id')
             .limit(5)
             .offset((page - 1) * 5)
             .select([
@@ -31,7 +31,7 @@ module.exports = {
                 'ongs.city', 
                 'ongs.uf'
             ])
-
+        
         res.header('X-Total-Count', count['count(*)'])
         return res.json(casos)
     },
