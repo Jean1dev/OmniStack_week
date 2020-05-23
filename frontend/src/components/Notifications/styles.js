@@ -43,7 +43,7 @@ export const NotificationList = styled.div`
         width: 0;
         height: 0;
         border-left: 20px solid transparent;   
-        border-rigth: 20px solid transparent;
+        border-right: 20px solid transparent;
         border-bottom: 20px solid rgba(0, 0, 0, 0.6)
     }
 `
